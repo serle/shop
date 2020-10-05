@@ -1,6 +1,6 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme?: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         titleBar: {
             background:
@@ -10,6 +10,13 @@ const useStyles = makeStyles((theme?: Theme) =>
         icon: {
             color: 'white',
         },
+        badge: {
+            width: '60px',
+            height: '30px',
+            position: 'absolute',
+            bottom: '10px',
+            right: '10px'
+        }
     }),
 );
 

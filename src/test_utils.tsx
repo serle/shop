@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react'
-import { render } from '@testing-library/react'
+import React, { FunctionComponent } from 'react';
+import { render } from '@testing-library/react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({

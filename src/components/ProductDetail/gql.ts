@@ -8,7 +8,6 @@ const PRODUCT_DETAIL = gql`
             id
             name
             image_key
-            offer_ids
             information {
                 section_text
                 section_title

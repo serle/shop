@@ -23,35 +23,28 @@ type Product = {
 }
 
 
-const ProductList:FunctionComponent<Props> = ({ userId = "1" }) => {
+const ProductList:FunctionComponent<Props> = ({ userId = "5" }) => {
+    //setup
     const classes = useStyles();
-    const [productId, setProductId] = React.useState<string | null>(null);
-
+    const [productId, setProductId] = React.useState<string|null>(null);
     const { loading:list_loading, error:list_error, data:list_data } = useQuery(PRODUCT_LIST_QUERY);
-    const { loading:user_loading, error:user_error, data:user_data } = useQuery(USER_QUERY, {
-        variables: { id: userId },
-    });
-    const openProductDetail = (id:string) => {
-        setProductId(id);
-    };
-    const closeProductDetail = () => {
-        setProductId(null);
-    };
+    const { loading:user_loading, error:user_error, data:user_data } = useQuery(USER_QUERY, { variables: { id: userId } });
+    const openProductDetail = (id:string) => setProductId(id);
+    const closeProductDetail = () => setProductId(null);
 
-
+    //early exit
     if (list_loading || user_loading) return <p>Loading...</p>;
     if (list_error || user_error) return <p>Error :(</p>;
 
-    const { productList: product_arr } = list_data;
-    const { user: { available_badges:user_badges, offers:user_offers } } = user_data;
+    //render
+    const badgedUserOffers = getBadgedUserOffers(user_data.user.available_badges, user_data.user.offers);
 
-    const badgedUserOffers = getBadgedUserOffers(user_badges, user_offers);
-    const products = product_arr.map((v:Product) => <Product key={v.id}
-                                                             id={v.id}
-                                                             name={v.name}
-                                                             image_key={v.image_key}
-                                                             badge_name={getHighestPriorityBadge(v.offer_ids, badgedUserOffers)}
-                                                             openProductDetail={openProductDetail}/>);
+    const products = list_data.productList.map((product:Product) => <Product key={product.id}
+                                                                             id={product.id}
+                                                                             name={product.name}
+                                                                             image_key={product.image_key}
+                                                                             badge_name={ getHighestPriorityBadge(product.offer_ids, badgedUserOffers) }
+                                                                             openProductDetail={openProductDetail}/>);
 
     return (
         <Fragment>
@@ -66,7 +59,7 @@ const ProductList:FunctionComponent<Props> = ({ userId = "1" }) => {
                 </Grid>
             </Grid>
             { productId ? <ProductDetail productId={productId}
-                                         badge_name={getHighestPriorityBadge(getProductOffers(product_arr, productId), badgedUserOffers)}
+                                         badge_name={getHighestPriorityBadge(getProductOffers(list_data.productList, productId), badgedUserOffers)}
                                          closeProductDetail={closeProductDetail}/> : null }
         </Fragment>
     );

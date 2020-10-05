@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
-
+import Typography from "@material-ui/core/Typography";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,17 +10,16 @@ import { useQuery } from "@apollo/client";
 
 import useStyles from './styles';
 import PRODUCT_DETAIL from './gql';
-import {Typography} from "@material-ui/core";
 
 type Props = {
-    productId: string
+    productId: string | null
     badge_name: string | null
     closeProductDetail: () => void
 }
 
 const ProductDetail:FunctionComponent<Props> = ({productId, badge_name, closeProductDetail}) => {
     const classes = useStyles();
-    const { loading, error, data } = useQuery(PRODUCT_DETAIL, { variables: { id:productId }  });
+    const { loading, error, data } = useQuery(PRODUCT_DETAIL, { variables: { id:productId } });
 
     //early exit
     if (loading) return <p>Loading...</p>;
@@ -35,11 +33,11 @@ const ProductDetail:FunctionComponent<Props> = ({productId, badge_name, closePro
 
     return (
         <Dialog data-testid="ProductDetail"
-                open={true}
+                open={productId != null}
                 onClose={closeProductDetail}
                 aria-labelledby="product-detail-dialog"
                 className={classes.root}>
-            <DialogTitle id={productId}>{name}</DialogTitle>
+            <DialogTitle>{name}</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
                     <Grid container spacing={2} className={classes.visual}>
@@ -49,7 +47,7 @@ const ProductDetail:FunctionComponent<Props> = ({productId, badge_name, closePro
                         <Grid item>
                             <Typography>{`Price: ${current_price} ${currency_code}`}</Typography>
                             { original_price ? <Typography>{`Original Price: ${original_price} ${currency_code}`}</Typography> : null }
-                            { badge_name ? <Typography>{`badge: ${badge}`}</Typography> : null }
+                            { badge_name ? <img className={classes.badge} src={badge} alt={badge_name} /> : null }
                         </Grid>
                     </Grid>
                     <Grid item>

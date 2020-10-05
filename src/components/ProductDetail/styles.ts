@@ -1,6 +1,6 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             display: 'flex',
@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         description: {
             textAlign: 'justify'
+        },
+        badge: {
+            width: '60px',
+            height: '30px',
+            transform: 'translateY(20px)'
         }
     }),
 );

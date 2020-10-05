@@ -58,14 +58,16 @@ type Product = {
 }
 
 interface UserOfferMap {
-    [key:string]: Offer;                   //offer_type->offer
+    [key:string]: Offer[];                   //offer_type->offer[]
 }
 
-interface IdExistanceMap {
+interface IdExistenceMap {
     [key:string]: boolean;                  //id -> true
 }
 
-export function getProductOffers(arr:Product[], id:string) {
+export function getProductOffers(arr:Product[], id:string|null) {
+    if (id === null) return [];
+
     if (arr && arr.length > 0) {
         const product = arr.find(v => v.id === id)
         return product ? product.offer_ids : [];
@@ -83,7 +85,12 @@ export function getBadgedUserOffers(user_badges:string, user_offers:Offer[]):Bad
     //create an offer map for efficient lookup
     const offer_map:UserOfferMap = {};
     for (let offer of user_offers) {
-        offer_map[offer.type] = offer;
+        if (offer_map[offer.type] === undefined) {
+            offer_map[offer.type] = [offer];
+        }
+        else {
+            offer_map[offer.type].push(offer)
+        }
     }
 
     //from user badges create a prioritised list of badged_offers
@@ -91,12 +98,16 @@ export function getBadgedUserOffers(user_badges:string, user_offers:Offer[]):Bad
                       .reduce((prev:BadgedOffer[], curr:string) => {
                                const badge_arr = curr.split(':')
                                const badge = badge_arr[0]
-                               const offer_arr = badge_arr[1].split(',')
-                                                             .map(badge_type => {
-                                                                   const { id, title, type } = offer_map[badge_type];
-                                                                   return { id: id, title:title, type:type, badge:badge }
-                                                             })
-                               return prev.concat(offer_arr);
+                               const badge_types = badge_arr[1].split(',')
+
+                               const result:BadgedOffer[] = [];
+                               for (let badge_type of badge_types) {
+                                   const offers = offer_map[badge_type];
+                                   for(let offer of offers) {
+                                        result.push({ id: offer.id, title: offer.title, type: offer.type, badge:badge })
+                                   }
+                               }
+                               return prev.concat(result);
                       }, []);
 
 }
@@ -104,10 +115,10 @@ export function getBadgedUserOffers(user_badges:string, user_offers:Offer[]):Bad
 //given the product_offer_ids from the productListQuery and the prioritiesed badged_offer_arr from the userQuery
 //return the highest priority user badge
 export function getHighestPriorityBadge(product_offer_ids:string[], badged_offer_arr:BadgedOffer[]):string | null {
-    if (!product_offer_ids || !badged_offer_arr) return null;
+    if (product_offer_ids === null || badged_offer_arr === null) return null;
 
     //create an id existance map for efficiency
-    const id_map:IdExistanceMap = {};
+    const id_map:IdExistenceMap = {};
     for (let id of product_offer_ids) {
         id_map[id] = true;
     }

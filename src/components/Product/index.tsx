@@ -27,6 +27,7 @@ const Product:FunctionComponent<Props> = ({ id, name, image_key, badge_name, ope
     return (
         <GridListTile cols={1} rows={1}>
             { image_key ? <img src={image} alt={name} /> : null }
+            { badge_name ? <img className={classes.badge} src={badge} alt={badge_name} /> : null }
             <GridListTileBar
                 title={name}
                 titlePosition="top"

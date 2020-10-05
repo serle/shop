@@ -6,10 +6,7 @@ export const PRODUCT_LIST_QUERY = gql`
             id
             name
             image_key
-            price {
-                current_price
-                original_price
-            }
+            offer_ids
         }
     }
 `;
