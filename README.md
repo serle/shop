@@ -12,6 +12,7 @@
 1) Copy the docker-compose file from the git repository, if you have not already cloned the whole repository
 2) Change into the directory where the docker-compose.yaml file resides
 3) At the  command promp run: docker-compose up
+4) Open the browser on: http://localhost:8080
 
 ## Notes
 
@@ -31,6 +32,10 @@ sure if the badge algorithm is correct, I would need to look at more scenarios a
 9) I felt the apollo mocking testing pattern would cause too much data creation work, so I left that for later.
 10) UI could be improved, but got the basics displayed.
 11) I put the userId in as a default parameter do that and Auth component could wrap the ProductList at a later stage.
+12) I just used a simple loading and error paragraph for the graphql loading and error components. 
+13) From a performance perspective, I would look at the suspense api to handle slow image loads as well as look and list
+virtualisation to re reduce over-fetching.
+   
 
 ## Time
 
