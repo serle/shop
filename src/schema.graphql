@@ -1,0 +1,50 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+type Offer {
+    id: String!
+    title: String!
+    type: OfferType!
+}
+
+type Price {
+    currency_code: String!
+    current_price: Int!
+    original_price: Int
+}
+
+type Product {
+    id: String!
+    image_key: String!
+    information: [ProductInformation]
+    name: String!
+    offer_ids: [String!]
+    price: Price!
+}
+
+type ProductInformation {
+    section_text: String
+    section_title: String
+}
+
+type Query {
+    product(id: String!): Product
+    productList: [Product!]!
+    user(id: String!): User
+}
+
+type User {
+    available_badges: String!
+    id: String!
+    offers: [Offer!]
+}
+
+enum OfferType {
+    BONUS
+    PRIORITY_ACCESS
+    REDUCED
+    SLOTTED
+}
