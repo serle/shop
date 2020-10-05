@@ -18,7 +18,7 @@ const Product:FunctionComponent<Props> = ({ id, name, image_key, badge_name, ope
     const classes = useStyles();
 
     const image = `https://asset1.cxnmarksandspencer.com/is/image/mands/${image_key}`;
-    const badge = `/${badge_name}_icon.jpg`;
+    const badge = `./${badge_name}_icon.jpg`;
 
     const icon = <IconButton aria-label={`star ${name}`} className={classes.icon} onClick={() => openProductDetail(id)}>
                     <StarBorderIcon/>

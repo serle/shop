@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
             bottom: '10px',
             right: '10px'
         }
-    }),
+    }), {index: 1}
 );
 
 export default useStyles;

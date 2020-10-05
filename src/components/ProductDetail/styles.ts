@@ -20,7 +20,7 @@ const useStyles = makeStyles(() =>
             height: '30px',
             transform: 'translateY(20px)'
         }
-    }),
+    }),{index: 1}
 );
 
 export default useStyles;

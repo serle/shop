@@ -1,0 +1,9 @@
+brief
+build
+node_modules
+Dockerfile
+Dockerfile.prod
+.dockerignore
+.scratch
+.gitignore
+tsconfig.json

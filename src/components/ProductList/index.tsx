@@ -48,7 +48,7 @@ const ProductList:FunctionComponent<Props> = ({ userId = "5" }) => {
 
     return (
         <Fragment>
-            <Grid data-testid="ProductList" container spacing={3}>
+            <Grid data-testid="ProductList" container spacing={1}>
                 <Grid item xs={12}>
                     <Typography variant="h4">Welcome to our Store</Typography>
                 </Grid>

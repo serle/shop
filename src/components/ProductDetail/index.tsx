@@ -29,7 +29,7 @@ const ProductDetail:FunctionComponent<Props> = ({productId, badge_name, closePro
     const { product: { name, image_key, price: { currency_code, current_price, original_price }, information } } = data;
 
     const image = `https://asset1.cxnmarksandspencer.com/is/image/mands/${image_key}`;
-    const badge = `/${badge_name}_icon.jpg`;
+    const badge = `./${badge_name}_icon.jpg`;
 
     return (
         <Dialog data-testid="ProductDetail"
