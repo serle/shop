@@ -1,44 +1,39 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Install
 
-## Available Scripts
+### Development Environment
 
-In the project directory, you can run:
+1) Clone the repository into a local folder: git clone https://github.com/serle/shop.git
+2) Start the graphql server: docker run --name server -d chrismns/tech-test-mock-server:0.1.0
+3) Start the development server: npm start
+4) Open the browser on: http://localhost:3000 
 
-### `yarn start`
+### Containerised Production Environment
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1) Copy the docker-compose file from the git repository, if you have not already cloned the whole repository
+2) Change into the directory where the docker-compose.yaml file resides
+3) At the  command promp run: docker-compose up
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Notes
 
-### `yarn test`
+1) I took the opportunity to move from enzyme (my normal testing library) to react-testing-library as I was keen learn 
+take advantage of the less brittle testing approach. It took a while to fix framework versioning issues, but
+the basic setup works. I did not focus on UI testing beyond it renders each component.
+2) I exploited React functional patterns and went for function composition over the old class based approach.
+3) I exploited folder structure to created components and went for single responsibility per file to avoid clutter
+4) I ran into a jest issue with test file naming conversion, but I circumvented this with the _.test.tsx naming convention.
+5) I ran into an issue where the graphql Product type is different when called from the product or 
+productList query, this would need to be fixed by the server team. I just removed the offer_ids field from the product query
+as apollo's cache normalisation was causing downstream issues.
+6) I opted for material-ui and css in js to localise css per component and exploit material-ui.
+7) I ran into the material-ui differences between dev and prod and fixed this with the extra index parameter on makeStyles.
+8) In general, I would add far more testing and edge cases, but I established the e2e testing pattern as an initial base. Not quite 
+sure if the badge algorithm is correct, I would need to look at more scenarios and unpack it more. 
+9) I felt the apollo mocking testing pattern would cause too much data creation work, so I left that for later.
+10) UI could be improved, but got the basics displayed.
+11) I put the userId in as a default parameter do that and Auth component could wrap the ProductList at a later stage.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Time
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1) Environment Setup and debugging issues: 4 hours
+2) Development: 3 hours
+3) Dockerising: 20 min    
