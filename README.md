@@ -1,3 +1,12 @@
+# Project
+
+Integrating:
+1) React Functional Components with hooks
+2) Apollo Client Hooks
+3) Material UI hooks
+4) React Testing Library 
+5) Creating production Docker & Docker-Compose assets 
+
 ## Install
 
 ### Development Environment
